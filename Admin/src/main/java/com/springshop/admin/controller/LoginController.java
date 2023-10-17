@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -30,6 +31,11 @@ public class LoginController {
         return "login";
     }
 
+    @RequestMapping("/index")
+    public String home(){
+        return "index";
+    }
+
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("adminDto", new AdminDto());
@@ -43,40 +49,40 @@ public class LoginController {
 
     @PostMapping("/register-new")
     public String addNewAdmin(@Valid @ModelAttribute("adminDto") AdminDto adminDto,
-                              BindingResult result, Model model,
-                              HttpSession session
+                              BindingResult result, Model model
     ) {
         try {
-            session.removeAttribute("message");
+            // checks if there are any validation errors in the adminDto
             if (result.hasErrors()) {
                 model.addAttribute("adminDto", adminDto);
                 result.toString();
                 return "register";
             }
-            String username = adminDto.getUsername();
+            String username = adminDto.getUsername();//retrieves the username from the adminDto
             Admin admin = adminService.findByUsername(username);
 
             if (admin != null) {
-                model.addAttribute("adminDto", adminDto);
-                session.setAttribute("message","Your email has been registed");
+                model.addAttribute("adminDto", adminDto);// Adds the adminDto object to the model.
                 System.out.println("admin not null");
+                model.addAttribute("emailError","Your email has been registered!");
                 return "register";
             }
+            //checks if the password and repeated password match
             if (adminDto.getPassword().equals(adminDto.getRepeatPassword())){
                 adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
                 adminService.save(adminDto);
                 System.out.println("success");
-                session.setAttribute("message", "Register successful");
+                model.addAttribute("success","Register successfully");
                 model.addAttribute("adminDto", adminDto);
 
             } else {
                 model.addAttribute("adminDto", adminDto);
-                session.setAttribute("message","Password is not same");
+                model.addAttribute("passwordError","Ypur password maybe wrong! Please check again!");
                 return "register";
             }
         } catch (Exception e) {
             e.printStackTrace();
-            session.setAttribute("message", "Server is error, please try again later");
+            model.addAttribute("errors","The server has been wrong! ");
         }
         return "register";
     }
