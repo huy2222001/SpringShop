@@ -17,7 +17,7 @@
         <div id="content">
 
             <!-- Topbar -->
-            <nav></nav>
+            <nav th:replace="fragments :: topbar"></nav>
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
@@ -68,11 +68,12 @@
 
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer th:replace="~{fragments::footer}"></footer>
-            <!-- End of Footer -->
+
 
         </div>
+        <!-- Footer -->
+        <footer th:replace="~{fragments::footer}"></footer>
+        <!-- End of Footer -->
         <!-- End of Content Wrapper -->
 
     </div>

@@ -62,7 +62,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Components:</h6>
                 <a class="collapse-item" th:href="@{/categories}">Manage Category</a>
-                <a class="collapse-item" href="cards.html">Manage Product</a>
+                <a class="collapse-item" th:href="@{/products}">Manage Product</a>
             </div>
         </div>
     </li>
@@ -104,13 +104,13 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Login Screens:</h6>
-                <a class="collapse-item" href="login.html">Login</a>
-                <a class="collapse-item" href="register.html">Register</a>
-                <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                <a class="collapse-item" th:href="@{login}">Login</a>
+                <a class="collapse-item" th:href="@{register}">Register</a>
+                <a class="collapse-item" th:href="@{forgot-password}">Forgot Password</a>
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Other Pages:</h6>
-                <a class="collapse-item" href="404.html">404 Page</a>
-                <a class="collapse-item" href="blank.html">Blank Page</a>
+                <a class="collapse-item" th:href="@{404}">404 Page</a>
+                <a class="collapse-item" th:href="@{blank}">Blank Page</a>
             </div>
         </div>
     </li>
