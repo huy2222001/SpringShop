@@ -45,33 +45,52 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product save(MultipartFile imageProduct, ProductDto productDto) {
+        Product product = new Product();
         try {
-            Product product = new Product();
-            if (imageProduct == null){
+            if (imageProduct == null) {
                 product.setImage(null);
             } else {
-                if (imageUpload.uploadImage(imageProduct)){
-                    System.out.println("Upload successfully");
-                }
+                imageUpload.uploadImage(imageProduct);
                 product.setImage(Base64.getEncoder().encodeToString(imageProduct.getBytes()));
             }
             product.setName(productDto.getName());
             product.setDescription(productDto.getDescription());
-            product.setCategory(productDto.getCategory());
-            product.setCostPrice(productDto.getCostPrice());
             product.setCurrentQuantity(productDto.getCurrentQuantity());
-            product.set_activated(true);
+            product.setCostPrice(productDto.getCostPrice());
+            product.setCategory(productDto.getCategory());
             product.set_deleted(false);
+            product.set_activated(true);
             return productRepository.save(product);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
     @Override
-    public Product update(ProductDto productDto) {
-        return null;
+    public Product update(MultipartFile imageProduct, ProductDto productDto) {
+        try {
+            Product productUpdate = productRepository.getReferenceById(productDto.getId());
+            if (imageProduct.getBytes().length > 0) {
+                if (imageUpload.checkExist(imageProduct)) {
+                    productUpdate.setImage(productUpdate.getImage());
+                } else {
+                    imageUpload.uploadImage(imageProduct);
+                    productUpdate.setImage(Base64.getEncoder().encodeToString(imageProduct.getBytes()));
+                }
+            }
+            productUpdate.setCategory(productDto.getCategory());
+            productUpdate.setId(productUpdate.getId());
+            productUpdate.setName(productDto.getName());
+            productUpdate.setDescription(productDto.getDescription());
+            productUpdate.setCostPrice(productDto.getCostPrice());
+            productUpdate.setSalePrice(productDto.getSalePrice());
+            productUpdate.setCurrentQuantity(productDto.getCurrentQuantity());
+            return productRepository.save(productUpdate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -82,5 +101,20 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void enableById(Long id) {
 
+    }
+
+    @Override
+    public ProductDto getById(Long id) {
+        ProductDto productDto = new ProductDto();
+        Product product = productRepository.getById(id);
+        productDto.setId(product.getId());
+        productDto.setName(product.getName());
+        productDto.setDescription(product.getDescription());
+        productDto.setCostPrice(product.getCostPrice());
+        productDto.setSalePrice(product.getSalePrice());
+        productDto.setCurrentQuantity(product.getCurrentQuantity());
+        productDto.setCategory(product.getCategory());
+        productDto.setImage(product.getImage());
+        return productDto;
     }
 }

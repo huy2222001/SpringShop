@@ -31,6 +31,7 @@
                 </div>
                 <a th:href="@{/add-product}" class="btn btn-primary">Add new Product
                 </a>
+                <img src="">
                 <table class="table table-striped" th:if="${size > 0}">
                     <thead>
                     <tr>
@@ -45,12 +46,15 @@
                     </thead>
                     <tbody>
                     <tr th:each="product : ${products}">
-                        <th scope="row" th:text="${product.name}">1</th>
-                        <td th:text="${product.category.name}">Mark</td>
+                        <th scope="row" th:text="${product.name}"></th>
+                        <td th:text="${product.category.name}"></td>
                         <td th:text="${product.costPrice}"></td>
                         <td th:text="${product.currentQuantity}"></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <img class = "my-product-image" style="height: 40px; width: 40px;" alt=""
+                                 th:src="'data:image/jpeg;base64,' + ${product.image}">
+                        </td>
+                        <td><a th:href="@{/update-product/{id} (id = ${product.id})}" class="btn btn-primary">Update</a></td>
                         <td></td>
                     </tr>
                     </tbody>
@@ -73,19 +77,12 @@
 <!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
-<a th:replace="~{fragments::scroll}"></a>
+<a th:replace = "~{fragments::scroll}">
+</a>
 
 
-
-<!--End-->
-
-<!-- Edit Category Modal -->
-
-<!-- End -->
 <!-- Bootstrap core JavaScript-->
-<div th:replace="~{fragments::script}"></div>
-
-<script th:src="@{/js/categories.js}"></script>
+<div th:replace = "~{fragments::script}"></div>
 </body>
 
 </html>
