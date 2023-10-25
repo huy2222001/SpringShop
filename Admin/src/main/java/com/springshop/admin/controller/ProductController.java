@@ -7,6 +7,7 @@ import com.springshop.library.service.CategoryService;
 import com.springshop.library.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,14 +26,26 @@ public class ProductController {
 
     private final CategoryService categoryService;
     @GetMapping("/products")
-    public String products(Model model, Principal principal){
-        if (principal == null){
-            return  "redirect:/login";
+    public String products(Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
         }
-        List<ProductDto> productDtoList = productService.findAll();
-        model.addAttribute("title", "Manage Product");
-        model.addAttribute("products", productDtoList);
-        model.addAttribute("size", productDtoList.size());
+        List<ProductDto> products = productService.findAll();
+        model.addAttribute("products", products);
+        model.addAttribute("size", products.size());
+        return "products";
+    }
+    @GetMapping("/products/{pageNo}")
+    public String allProducts(@PathVariable("pageNo") int pageNo, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        Page<ProductDto> products = productService.getAllProducts(pageNo);
+        model.addAttribute("title", "Manage Products");
+        model.addAttribute("size", products.getSize());
+        model.addAttribute("products", products);
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", products.getTotalPages());
         return "products";
     }
 

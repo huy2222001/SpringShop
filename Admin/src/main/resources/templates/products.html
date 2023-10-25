@@ -22,12 +22,12 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-                <div th:if="${size == 0}"> <p>No Product in shop</p></div>
-                <div th:if = "${success}" class="text-center alert alert-success">
-                    <p th:text = "${success}"></p>
+                <div th:if="${size == 0}"><p>No Product in shop</p></div>
+                <div th:if="${success}" class="text-center alert alert-success">
+                    <p th:text="${success}"></p>
                 </div>
-                <div th:if = "${error}" class="text-center alert alert-danger">
-                    <p th:text = "${error}"></p>
+                <div th:if="${error}" class="text-center alert alert-danger">
+                    <p th:text="${error}"></p>
                 </div>
                 <a th:href="@{/add-product}" class="btn btn-primary">Add new Product
                 </a>
@@ -51,22 +51,41 @@
                         <td th:text="${product.costPrice}"></td>
                         <td th:text="${product.currentQuantity}"></td>
                         <td>
-                            <img class = "my-product-image" style="height: 40px; width: 40px;" alt=""
+                            <img class="my-product-image" style="height: 40px; width: 40px;" alt=""
                                  th:src="'data:image/jpeg;base64,' + ${product.image}">
                         </td>
-                        <td><a th:href="@{/update-product/{id} (id = ${product.id})}" class="btn btn-primary">Update</a></td>
+                        <td><a th:href="@{/update-product/{id} (id = ${product.id})}" class="btn btn-primary">Update</a>
+                        </td>
                         <td>
-                            <a th:if = "${product.activated == false}" th:href="@{/enable-product/{id} (id = ${product.id})}" class="btn btn-warning">Enable</a>
-                            <a th:if = "${product.deleted == false}" th:href = "@{/delete-product/{id} (id = ${product.id})}" class="btn btn-danger">Delete</a>
+                            <a th:if="${product.activated == false}"
+                               th:href="@{/enable-product/{id} (id = ${product.id})}" class="btn btn-warning">Enable</a>
+                            <a th:if="${product.deleted == false}"
+                               th:href="@{/delete-product/{id} (id = ${product.id})}" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                     </tbody>
                 </table>
+                <!--Pagination  -->
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li th:if="${currentPage!= 0}" class="page-item ">
+                            <a th:href="@{'/products/' + ${currentPage - 1}}" class="page-link">Previous</a>
+                        </li>
+                        <li th:each="i : ${#numbers.sequence(1, totalPages)}"
+                            th:classappend="${currentPage == i - 1 ? 'active' : ''}" class="page-item">
+                            <a th:href="@{'/products/' + ${i - 1}}" class="page-link" href="#">
+				     <span th:text="${i}">
+				     </span></a></li>
+                        <li th:if="${currentPage + 1 != totalPages}" class="page-item">
+                            <a th:href="@{'/products/' + ${currentPage + 1}}" class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+                <!--Pagination  -->
             </div>
 
 
             <!-- End of Main Content -->
-
 
 
         </div>
@@ -80,12 +99,12 @@
 <!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
-<a th:replace = "~{fragments::scroll}">
+<a th:replace="~{fragments::scroll}">
 </a>
 
 
 <!-- Bootstrap core JavaScript-->
-<div th:replace = "~{fragments::script}"></div>
+<div th:replace="~{fragments::script}"></div>
 </body>
 
 </html>
