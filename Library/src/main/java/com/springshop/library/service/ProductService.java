@@ -20,5 +20,4 @@ public interface ProductService {
     List<ProductDto> allProduct();
 
     Page<ProductDto> searchProducts(int pageNo, String keyword);
-    List<ProductDto> searchProducts(String keyword);
 }
