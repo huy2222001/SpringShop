@@ -104,7 +104,7 @@ public class ProductController {
             e.printStackTrace();
             attributes.addFlashAttribute("error", "Failed to update!");
         }
-        return "redirect:/products";
+        return "redirect:/products/0";
     }
     @RequestMapping(value = "/enable-product/{id}", method = {RequestMethod.PUT , RequestMethod.GET})
     public String enabledProduct(@PathVariable("id")Long id, RedirectAttributes attributes){
@@ -115,7 +115,7 @@ public class ProductController {
             e.printStackTrace();
             attributes.addFlashAttribute("error", "Failed to enabled!");
         }
-        return "redirect:/products";
+        return "redirect:/products/0";
     }
 
     @RequestMapping(value = "/delete-product/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
@@ -127,6 +127,23 @@ public class ProductController {
             e.printStackTrace();
             attributes.addFlashAttribute("error", "Failed to deleted");
         }
-        return "redirect:/products";
+        return "redirect:/products/0";
+    }
+    @GetMapping("/search-products/{pageNo}")
+    public String searchProduct(@PathVariable("pageNo") int pageNo,
+                                @RequestParam(value = "keyword") String keyword,
+                                Model model, Principal principal
+    ) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        Page<ProductDto> products = productService.searchProducts(pageNo, keyword);
+        model.addAttribute("title", "Result Search Products");
+        model.addAttribute("size", products.getSize());
+        model.addAttribute("products", products);
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", products.getTotalPages());
+        return "product-result";
+
     }
 }

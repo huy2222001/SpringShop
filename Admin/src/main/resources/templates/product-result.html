@@ -27,7 +27,7 @@
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
-            <div class="container-fluid" >
+            <div class="container-fluid">
                 <div class="input-group" style="width: 30%; margin-bottom: 20px;">
                     <form th:action = "@{/search-products/0}" method = "get">
                         <input type="text" class="form-control rounded" placeholder="Search" name = "keyword" aria-label="Search"
@@ -43,8 +43,7 @@
                 <div th:if = "${error}" class="text-center alert alert-danger">
                     <p th:text = "${error}"></p>
                 </div>
-                <table   style="text-align: center; vertical-align: middle;"
-                        class="table table-bordered" th:if = "${size > 0}">
+                <table class="table table-bordered" th:if = "${size > 0}">
                     <thead>
                     <tr>
                         <th scope="col">Name</th>
@@ -57,10 +56,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each = "product : ${products}" >
+                    <tr th:each = "product : ${products}">
                         <th scope="row" th:text = "${product.name}"></th>
                         <td th:text = "${product.category.name}"></td>
-                        <td th:text = "${product.costPrice} + ' ' + '$' "></td>
+                        <td th:text = "${product.costPrice}"></td>
                         <td th:text = "${product.currentQuantity}"></td>
                         <td>
                             <img class = "my-product-image" style="height: 40px; width: 40px;" alt=""
@@ -68,10 +67,10 @@
                         </td>
                         <td><a th:href="@{/update-product/{id}(id= ${product.id})}" class="btn btn-primary">Update</a></td>
                         <td>
-                            <a th:if="${product.deleted == true}"
-                               th:href="@{/enable-product/{id} (id = ${product.id})}" class="btn btn-warning">Enable</a>
-                            <a th:if="${product.deleted == false}"
-                               th:href="@{/delete-product/{id} (id = ${product.id})}" class="btn btn-danger">Delete</a>
+                            <a th:if="${product.deleted} == true" th:href="@{/enable-product/(id = ${product.id})}"
+                               class="btn btn-primary">Enable</a>
+                            <a th:if="${product.deleted} == false" th:href="@{/delete-product/(id = ${product.id})}"
+                               class=" btn btn-danger">Delete</a>
                         </td>
                     </tr>
                     </tbody>
