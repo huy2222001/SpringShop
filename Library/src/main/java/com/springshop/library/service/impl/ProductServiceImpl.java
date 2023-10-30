@@ -152,10 +152,7 @@ public class ProductServiceImpl implements ProductService {
         return dtoPage;
     }
 
-    @Override
-    public List<ProductDto> searchProducts(String keyword) {
-        return transferData(productRepository.searchProducts(keyword));
-    }
+
 
     private Page toPage(List list, Pageable pageable) {
         if (pageable.getOffset() >= list.size()) {

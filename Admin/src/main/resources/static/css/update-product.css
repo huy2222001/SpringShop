@@ -1,0 +1,15 @@
+.image-upload {
+    text-align: center; /* Căn giữa nội dung */
+}
+
+.my-product-image {
+    width: 100px;
+    height: 100px;
+    display: block; /* Để canh giữa hình ảnh */
+    margin: 0 auto; /* Để canh giữa hình ảnh */
+}
+
+.input-file {
+    margin-top: 10px; /* Khoảng cách giữa hình ảnh và input file */
+    display: block; /* Để nó hiển thị trên cùng một dòng */
+}
