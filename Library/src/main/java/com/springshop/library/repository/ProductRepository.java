@@ -21,4 +21,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("select p from Product p where p.name like %?1% or p.description like %?1%")
     List<Product> searchProducts(String keyword);
 
+
 }

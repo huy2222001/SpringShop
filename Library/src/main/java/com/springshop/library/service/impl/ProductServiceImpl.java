@@ -152,6 +152,10 @@ public class ProductServiceImpl implements ProductService {
         return dtoPage;
     }
 
+    @Override
+    public List<Product> getAllProducts() {
+        return null;
+    }
 
 
     private Page toPage(List list, Pageable pageable) {
