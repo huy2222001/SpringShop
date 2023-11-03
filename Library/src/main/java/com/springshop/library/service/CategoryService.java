@@ -1,5 +1,6 @@
 package com.springshop.library.service;
 
+import com.springshop.library.dto.CategoryDto;
 import com.springshop.library.model.Category;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface CategoryService {
     void enableById(Long id);
 
     List<Category> findAllByActivated();
+    List<CategoryDto> getCategoriesAndSize();
 }

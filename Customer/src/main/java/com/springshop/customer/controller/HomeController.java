@@ -29,10 +29,12 @@ public class HomeController {
     }
     @GetMapping("/home")
     public String index(Model model){
-        List<Category> categories = categoryService.findAll();
-        List<ProductDto> productDtos = productService.findAll();
+        model.addAttribute("page", "Products");
+        model.addAttribute("title", "Menu");
+        List<Category> categories = categoryService.findAllByActivated();
+        List<ProductDto> products = productService.products();
+        model.addAttribute("products", products);
         model.addAttribute("categories", categories);
-        model.addAttribute("products", productDtos);
         return "index";
     }
 }

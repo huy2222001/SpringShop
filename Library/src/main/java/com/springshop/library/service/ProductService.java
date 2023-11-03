@@ -9,17 +9,23 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<ProductDto> findAll();
-    Product save(MultipartFile imageProduct, ProductDto product);
-    Product update(MultipartFile imageProduct, ProductDto productDto);
-    void deleteById(Long id);
+    List<ProductDto> findAll();//check
+    Product save(MultipartFile imageProduct, ProductDto product);//check
+    Product update(MultipartFile imageProduct, ProductDto productDto);//check
+    void deleteById(Long id);//check
 
-    void enableById(Long id);
-    ProductDto getById(Long id);
+    void enableById(Long id);//check
+    ProductDto getById(Long id);//check
     Page<ProductDto> getAllProducts(int pageNo);
-    List<ProductDto> allProduct();
+    List<ProductDto> allProduct();//check
     Page<ProductDto> searchProducts(int pageNo, String keyword);
+
+    List<ProductDto> products();//check
+
 
 //    Customer
     List<Product> getAllProducts();
+    List<ProductDto> randomProduct();
+    List<ProductDto> listViewProducts();
+    List<ProductDto> findAllByCategory(String category);
 }

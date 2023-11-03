@@ -75,7 +75,7 @@ public class ProductController {
             e.printStackTrace();
             attributes.addFlashAttribute("error", "Failed to add new product");
         }
-        return "redirect:/products";
+        return "redirect:/products/0";
     }
     @GetMapping("/update-product/{id}")
     public String updateProductForm(@PathVariable("id") Long id, Model model, Principal principal){

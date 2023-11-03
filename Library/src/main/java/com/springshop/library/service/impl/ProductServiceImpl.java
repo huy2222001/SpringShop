@@ -153,8 +153,28 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductDto> products() {
+        return transferData(productRepository.getAllProduct());
+    }
+
+    @Override
     public List<Product> getAllProducts() {
         return null;
+    }
+
+    @Override
+    public List<ProductDto> randomProduct() {
+        return transferData(productRepository.randomProduct());
+    }
+
+    @Override
+    public List<ProductDto> listViewProducts() {
+        return transferData(productRepository.listViewProduct());
+    }
+
+    @Override
+    public List<ProductDto> findAllByCategory(String category) {
+        return transferData(productRepository.findAllByCategory(category));
     }
 
 

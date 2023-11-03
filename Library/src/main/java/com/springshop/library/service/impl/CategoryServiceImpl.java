@@ -1,5 +1,6 @@
 package com.springshop.library.service.impl;
 
+import com.springshop.library.dto.CategoryDto;
 import com.springshop.library.model.Category;
 import com.springshop.library.repository.CategoryRepository;
 import com.springshop.library.service.CategoryService;
@@ -67,5 +68,11 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> findAllByActivated() {
 
         return repo.findAllByActivated();
+    }
+
+    @Override
+    public List<CategoryDto> getCategoriesAndSize() {
+        List<CategoryDto> categories = repo.getCategoriesAndSize();
+        return categories;
     }
 }
