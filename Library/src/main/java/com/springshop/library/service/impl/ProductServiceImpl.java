@@ -182,6 +182,16 @@ public class ProductServiceImpl implements ProductService {
         return transferData(productRepository.getProductByCategoryId(id));
     }
 
+    @Override
+    public List<ProductDto> filterHighProducts() {
+        return transferData(productRepository.filterHighProducts());
+    }
+
+    @Override
+    public List<ProductDto> filterLowerProducts() {
+        return transferData(productRepository.filterLowerProducts());
+    }
+
 
     private Page toPage(List list, Pageable pageable) {
         if (pageable.getOffset() >= list.size()) {

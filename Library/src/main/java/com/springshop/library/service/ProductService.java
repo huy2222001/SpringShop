@@ -31,4 +31,9 @@ public interface ProductService {
 
     List<ProductDto> findByCategoryId(Long id);
 
+    List<ProductDto> filterHighProducts();
+
+    List<ProductDto> filterLowerProducts();
+
+
 }
