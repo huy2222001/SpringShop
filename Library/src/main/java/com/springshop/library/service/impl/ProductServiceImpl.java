@@ -177,6 +177,11 @@ public class ProductServiceImpl implements ProductService {
         return transferData(productRepository.findAllByCategory(category));
     }
 
+    @Override
+    public List<ProductDto> findByCategoryId(Long id) {
+        return transferData(productRepository.getProductByCategoryId(id));
+    }
+
 
     private Page toPage(List list, Pageable pageable) {
         if (pageable.getOffset() >= list.size()) {

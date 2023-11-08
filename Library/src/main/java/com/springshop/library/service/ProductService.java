@@ -28,4 +28,7 @@ public interface ProductService {
     List<ProductDto> randomProduct();
     List<ProductDto> listViewProducts();
     List<ProductDto> findAllByCategory(String category);
+
+    List<ProductDto> findByCategoryId(Long id);
+
 }

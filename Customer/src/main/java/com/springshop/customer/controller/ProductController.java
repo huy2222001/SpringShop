@@ -53,4 +53,17 @@ public class ProductController {
         model.addAttribute("products", products);
         return "shop-detail";
     }
+
+    @GetMapping("/find-products/{id}")
+    public String productsInCategory(@PathVariable("id") Long id, Model model) {
+        List<CategoryDto> categoryDtos = categoryService.getCategoriesAndSize();
+        List<ProductDto> productDtos = productService.findByCategoryId(id);
+        List<ProductDto> listView = productService.listViewProducts();
+        model.addAttribute("productViews", listView);
+        model.addAttribute("categories", categoryDtos);
+        model.addAttribute("title", productDtos.get(0).getCategory().getName());
+        model.addAttribute("page", "Product-Category");
+        model.addAttribute("products", productDtos);
+        return "products";
+    }
 }
