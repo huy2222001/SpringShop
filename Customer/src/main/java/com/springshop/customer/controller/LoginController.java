@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
     private final CustomerService customerService;
     private final BCryptPasswordEncoder passwordEncoder;
-    @RequestMapping(value = "/login")
-    public String login() {
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(Model model) {
+        model.addAttribute("title", "Login Page");
+        model.addAttribute("page", "Home");
         return "login";
     }
     @GetMapping("/register")
