@@ -3,6 +3,7 @@ package com.springshop.customer.controller;
 import com.springshop.library.dto.ProductDto;
 import com.springshop.library.model.Category;
 import com.springshop.library.model.Customer;
+import com.springshop.library.model.ShoppingCart;
 import com.springshop.library.service.CategoryService;
 import com.springshop.library.service.CustomerService;
 import com.springshop.library.service.ProductService;
@@ -31,7 +32,10 @@ public class HomeController {
         if (principal != null) {
             Customer customer = customerService.findByUsername(principal.getName());
             session.setAttribute("username", customer.getFirstName() + " " + customer.getLastName());
-
+            ShoppingCart shoppingCart = customer.getCart();
+            if (shoppingCart != null) {
+                session.setAttribute("totalItems", shoppingCart.getTotalItems());
+            }
         }
         return "home";
     }
