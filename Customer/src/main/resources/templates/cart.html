@@ -42,7 +42,7 @@
                 <div class="table-main table-responsive">
                     <p class="text-center" th:if="${check}"><i class="text-info font-weight-bold text-center"></i>
                         You don't have any items in your cart</p>
-                    <table class="table" >
+                    <table class="table" th:if="${grandTotal}" >
                         <thead>
                         <tr>
                             <th>Images</th>
@@ -67,7 +67,7 @@
                             <td class="price-pr">
                                 <p th:text="'$' + ${cartItem.unitPrice}"></p>
                             </td>
-                            <form>
+                            <form th:action="@{/update-cart}" method="post">
                                 <input type = "hidden" name = "id" th:value = "${cartItem.product.id}" >
                                 <td class="quantity-box">
                                     <input type="number" name="quantity" th:value="${cartItem.quantity}" size="4"
