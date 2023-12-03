@@ -46,6 +46,14 @@ public class CustomerServiceImpl implements CustomerService {
         customerDto.setCountry(customer.getCountry());
         return customerDto;
     }
-
+    @Override
+    public Customer update(CustomerDto dto) {
+        Customer customer = customerRepository.findByUsername(dto.getUsername());
+        customer.setAddress(dto.getAddress());
+        customer.setCity(dto.getCity());
+        customer.setCountry(dto.getCountry());
+        customer.setPhoneNumber(dto.getPhoneNumber());
+        return customerRepository.save(customer);
+    }
 
 }

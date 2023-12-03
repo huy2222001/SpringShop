@@ -9,4 +9,6 @@ public interface CustomerService {
     Customer findByUsername(String username);
 
     CustomerDto getCustomer(String username);
+
+    Customer update(CustomerDto customerDto);
 }
