@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -124,6 +125,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return cartRepository.save(shoppingCart);
     }
 
+    @Override
+    @Transactional
+    public void deleteCartById(Long id) {
+        ShoppingCart shoppingCart = cartRepository.getById(id);
+        if(!ObjectUtils.isEmpty(shoppingCart) && !ObjectUtils.isEmpty(shoppingCart.getCartItems())){
+            itemRepository.deleteAll(shoppingCart.getCartItems());
+        }
+        shoppingCart.getCartItems().clear();
+        shoppingCart.setTotalPrice(0);
+        shoppingCart.setTotalItems(0);
+        cartRepository.save(shoppingCart);
+    }
     private Product transfer(ProductDto productDto) {
         Product product = new Product();
         product.setId(productDto.getId());

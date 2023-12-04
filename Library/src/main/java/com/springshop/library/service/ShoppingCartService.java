@@ -10,6 +10,6 @@ public interface ShoppingCartService {
     ShoppingCart updateCart(ProductDto productDto, int quantity, String username);
 
     ShoppingCart removeItemFromCart(ProductDto productDto, String username);
-
+    void deleteCartById(Long id);
     ShoppingCartDto addItemToCartSession(ShoppingCartDto cartDto, ProductDto productDto, int quantity);
 }

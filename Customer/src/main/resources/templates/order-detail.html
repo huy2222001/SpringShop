@@ -49,7 +49,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr >
+                        <tr th:each="orderdetail : ${order.orderDetailList}">
                             <td class="thumbnail-img">
                                 <a href="#">
                                     <img class="img-fluid"
@@ -57,10 +57,10 @@
                                 </a>
                             </td>
                             <td class="name-pr">
-                                <p ></p>
+                                <p th:text="${orderdetail.product.name}"></p>
                             </td>
                             <td class="price-pr">
-                                <p ></p>
+                                <p th:text="'$' + ${orderdetail.product.costPrice}"></p>
                             </td>
                         </tr>
                         </tbody>
@@ -73,7 +73,7 @@
                                 <div class="d-flex">
                                     <p>Total Quantity [(${order.quantity})]</p>
                                     <h4>Sub Total</h4>
-                                    <div class="ml-auto font-weight-bold" > </div>
+                                    <div class="ml-auto font-weight-bold" th:text="${order.totalPrice}"> </div>
                                 </div>
                                 <hr class="my-1">
                             </div>

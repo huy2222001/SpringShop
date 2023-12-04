@@ -2,16 +2,18 @@ package com.springshop.customer.controller;
 
 
 import com.springshop.library.dto.CustomerDto;
-import com.springshop.library.model.City;
-import com.springshop.library.model.Country;
-import com.springshop.library.model.ShoppingCart;
+import com.springshop.library.model.*;
 import com.springshop.library.service.CityService;
 import com.springshop.library.service.CountryService;
 import com.springshop.library.service.CustomerService;
+import com.springshop.library.service.OrderService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
 import java.util.List;
@@ -20,6 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
     private final CustomerService customerService;
+
+    private final OrderService orderService;
 
     private final CountryService countryService;
 
@@ -49,6 +53,38 @@ public class OrderController {
                 model.addAttribute("grandTotal", cart.getTotalItems());
                 return "checkout";
             }
+        }
+    }
+    @GetMapping("/orders")
+    public String getOrders(Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        } else {
+            Customer customer = customerService.findByUsername(principal.getName());
+            List<Order> orderList = customer.getOrders();
+            model.addAttribute("orders", orderList);
+            model.addAttribute("title", "Order");
+            model.addAttribute("page", "Order");
+            return "order";
+        }
+    }
+
+    @RequestMapping(value = "/add-order", method = {RequestMethod.POST})
+    public String createOrder(Principal principal,
+                              Model model,
+                              HttpSession session) {
+        if (principal == null) {
+            return "redirect:/login";
+        } else {
+            Customer customer = customerService.findByUsername(principal.getName());
+            ShoppingCart cart = customer.getCart();
+            Order order = orderService.save(cart);
+            session.removeAttribute("totalItems");
+            model.addAttribute("order", order);
+            model.addAttribute("title", "Order Detail");
+            model.addAttribute("page", "Order Detail");
+            model.addAttribute("success", "Add order successfully");
+            return "order-detail";
         }
     }
 }
